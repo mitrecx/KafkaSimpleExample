@@ -38,19 +38,21 @@ public class KafkaConsumerConfig {
     private int concurrency;
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, MessageEntity>> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, MessageEntity> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(concurrency);
         factory.getContainerProperties().setPollTimeout(1500);
         return factory;
     }
 
-    private ConsumerFactory<String, MessageEntity> consumerFactory() {
+    private ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(
-                consumerConfigs(),
-                new StringDeserializer(),
-                new JsonDeserializer<>(MessageEntity.class)
+                consumerConfigs()
+//                ,
+//                new StringDeserializer(),
+//                new StringDeserializer()
+                //new JsonDeserializer<>(MessageEntity.class)
         );
     }
 

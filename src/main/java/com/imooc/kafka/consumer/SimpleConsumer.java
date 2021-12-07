@@ -14,7 +14,8 @@ public class SimpleConsumer {
     private final Gson gson = new Gson();
 
     @KafkaListener(topics = "${kafka.topic.default}", containerFactory = "kafkaListenerContainerFactory")
-    public void receive(MessageEntity message) {
+    public void receive(String message) {
+
         log.info(gson.toJson(message));
     }
 }
